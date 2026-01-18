@@ -33,14 +33,14 @@ source_world:
     enabled: true
     provider: "openai"
     model: "gpt-4o"
-    api_key: "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"  # ← ACÁ
+    api_key: ${OPENAI_API_KEY}  # ← ACÁ
     min_indicators: 1
 
   business_logic: # TODOS los contratos ← NUEVO
     enabled: true
     provider: "openai"
     model: "gpt-4"
-    api_key: "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"  # ← ACÁ
+    api_key: ${OPENAI_API_KEY}  # ← ACÁ
   # ─────────────────────────────────────────────────────────────────
   # ORACLE ANALYZER (LLM-based)
   # Detecta vulnerabilidades de precio que los analyzers estáticos no pueden
@@ -50,7 +50,7 @@ source_world:
     description: "Flash loan manipulation, price oracle attacks, sandwich vectors"
     provider: "openai"       # openai | anthropic
     model: "gpt-4o"          # gpt-4o | claude-sonnet-4-20250514
-    api_key: "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"  # ← ACÁ
+    api_key: ${OPENAI_API_KEY}  # ← ACÁ
     timeout: 180
     min_indicators: 2        # Mínimo de keywords de precio para activar LLM
     # Detecta: balanceOf/price, reserves, oracle, TWAP, swap, pool, deposit/mint
@@ -60,21 +60,21 @@ source_world:
       enabled: true
       provider: "openai"
       model: "gpt-4o"
-      api_key: "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"  # ← ACÁ
+      api_key: ${OPENAI_API_KEY}  # ← ACÁ
       min_indicators: 1
 
   signature_replay:
       enabled: true
       provider: "openai"
       model: "gpt-4o"
-      api_key: "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"  # ← ACÁ
+      api_key: ${OPENAI_API_KEY}  # ← ACÁ
       min_indicators: 1
 
   delegatecall_loop:
       enabled: true
       provider: "openai"
       model: "gpt-4o"
-      api_key: "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"  # ← ACÁ
+      api_key: ${OPENAI_API_KEY}  # ← ACÁ
 # ┌─────────────────────────────────────────────────────────────────────────────┐
 # │ MUNDO BYTECODE (verdad ejecutable) - SIEMPRE se ejecuta                    │
 # └─────────────────────────────────────────────────────────────────────────────┘
@@ -152,10 +152,8 @@ llm:
   provider: "openai"  # claude | openai | ollama
   model: "gpt-4o"     # gpt-4o | claude-sonnet-4-20250514 | llama3:70b
   timeout: 180
-  api_key: "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"
+  api_key: ${OPENAI_API_KEY}
   # API Keys: usar variables de entorno
-  # export OPENAI_API_KEY="sk-..."
-  # export ANTHROPIC_API_KEY="sk-ant-..."
 
   # ─────────────────────────────────────────────────────────────────
   # AGENTE 1: Correlación
