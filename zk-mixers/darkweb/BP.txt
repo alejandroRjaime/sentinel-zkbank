@@ -1,0 +1,32 @@
+"""
+⚠️ ADVERTENCIA CRÍTICA:
+
+1. LEGALIDAD: Verifica las leyes de tu país antes de usar
+2. ÉTICA: Solo para investigación académica legítima
+3. SEGURIDAD: Usa máquina virtual dedicada
+4. ANONIMATO: Nunca uses información personal
+5. TRANSPARENCIA: Documenta todo propósito de investigación
+
+🔒 BUENAS PRÁCTICAS:
+
+✅ HACER:
+- Usar VPN + Tor (en ese orden)
+- Investigar solo contenido legal
+- Mantener registros de investigación
+- Consultar con comités éticos
+- Usar sistemas operativos seguros (Tails, Whonix)
+
+❌ NO HACER:
+- Acceder contenido ilegal
+- Recolectar datos personales
+- Realizar ataques o scans
+- Usar identidades reales
+- Comprometer sistemas
+
+🎓 PARA INVESTIGACIÓN ACADÉMICA:
+1. Obtén aprobación ética institucional
+2. Define objetivos de investigación claros
+3. Establece límites éticos por escrito
+4. Usa metodologías transparentes
+5. Publica resultados responsablemente
+"""

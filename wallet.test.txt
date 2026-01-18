@@ -1,0 +1,47 @@
+Successfully created new keypair.
+Address:     0x89c8Cc46BF0AB8dA38936D31b75eA438e9B880aC
+Private key: 0x2cbd0bc17059f39fa40171b3887aadc42cb593de6a7044e04f4f3452e8673a61
+
+
+forge script scripts/DeploySimple.s.sol:DeploySimple \
+  --rpc-url https://ethereum-sepolia-rpc.publicnode.com \
+  --private-key 0x2cbd0bc17059f39fa40171b3887aadc42cb593de6a7044e04f4f3452e8673a61 \
+  --broadcast
+
+
+  cast send 0x11459cd5e4468433e660aeD2f1d66D242a2B965a \
+  "deposit(bytes32)" \
+  0x0000000000000000000000000000000000000000000000000000000000005678 \
+  --value 0.01ether \
+  --private-key 0x2cbd0bc17059f39fa40171b3887aadc42cb593de6a7044e04f4f3452e8673a61 \
+  --rpc-url https://ethereum-sepolia-rpc.publicnode.com
+
+
+  forge create contracts/ZKSentinel.sol:ZKSentinel \
+    --constructor-args <VERIFIER_ADDR> <HASHER_ADDR> \
+    --rpc-url https://ethereum-sepolia-rpc.publicnode.com \
+    --private-key 0x2cbd0bc17059f39fa40171b3887aadc42cb593de6a7044e04f4f3452e8673a61
+
+
+    forge create contracts/Verifier.sol:Groth16Verifier \
+    --rpc-url https://ethereum-sepolia-rpc.publicnode.com \
+    --private-key 0x2cbd0bc17059f39fa40171b3887aadc42cb593de6a7044e04f4f3452e8673a61
+
+
+forge create contracts/HasherWrapper.sol:HasherWrapper \
+  --constructor-args "0xdBb0617Ac7E21744132127719D6a50C71910Bd8f" \
+  --rpc-url https://ethereum-sepolia-rpc.publicnode.com \
+  --private-key 0x2cbd0bc17059f39fa40171b3887aadc42cb593de6a7044e04f4f3452e8673a61
+
+
+  # Enviar ETH a otra wallet
+cast send 0xDIRECCION_DESTINO \
+  --value 0.1ether \
+  --rpc-url https://ethereum-sepolia-rpc.publicnode.com \
+  --private-key 0x2cbd0bc17059f39fa40171b3887aadc42cb593de6a7044e04f4f3452e8673a61
+
+
+ln -s ~/zksentinel-artifacts/build ~/zk/sentinel-zkbank/zksentinel/build
+ln -s ~/zksentinel-artifacts/notes ~/zk/sentinel-zkbank/zksentinel/notes
+
+ls -la ~/zk/sentinel-zkbank/zksentinel/ | grep "^l"

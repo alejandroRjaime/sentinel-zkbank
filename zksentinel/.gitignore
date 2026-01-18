@@ -1,0 +1,20 @@
+# Build artifacts
+build/
+out/
+cache/
+broadcast/
+
+# Dependencies
+node_modules/
+lib/
+
+# Secrets - CRÍTICO
+notes/
+.env
+
+# Generated
+poseidon_bytecode.txt
+*.lock
+
+# OS
+.DS_Store

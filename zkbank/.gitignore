@@ -1,0 +1,10 @@
+node_modules/
+*_js/
+*.r1cs
+*.sym
+*.zkey
+*.ptau
+out/
+cache/
+lib/
+broadcast/

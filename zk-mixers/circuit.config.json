@@ -1,0 +1,72 @@
+{
+  "version": "2.1.5",
+  "description": "Configuración para circuitos de tesis de investigación",
+  "circuits": {
+    "deposit": {
+      "name": "DepositCircuit",
+      "file": "circuits/deposit_test.circom",
+      "template": "MainDeposit",
+      "publicInputs": [
+        "depositAmount",
+        "tokenId",
+        "oldRoot",
+        "newRoot",
+        "nonce"
+      ],
+      "privateInputs": [
+        "privateKey",
+        "nullifierSeed",
+        "currentBalance",
+        "currentLeafIndex",
+        "merklePath",
+        "merklePathIndices"
+      ],
+      "outputs": [
+        "newBalance",
+        "commitment",
+        "nullifierHash"
+      ],
+      "curve": "bn128",
+      "protocol": "groth16",
+      "expectedConstraints": 520000
+    },
+    "withdrawal": {
+      "name": "WithdrawalCircuit",
+      "file": "circuits/withdrawal_test.circom",
+      "template": "MainWithdrawal",
+      "publicInputs": [
+        "withdrawalAmount",
+        "feeAmount",
+        "recipientAddress",
+        "tokenId",
+        "root",
+        "nullifierHashes",
+        "nonce"
+      ],
+      "privateInputs": [
+        "secret",
+        "nullifierSeed",
+        "currentBalance",
+        "merklePath",
+        "merklePathIndices",
+        "leafIndex"
+      ],
+      "outputs": [
+        "newBalance",
+        "totalWithdrawn",
+        "nullifierHash",
+        "commitment"
+      ],
+      "curve": "bn128",
+      "protocol": "plonk",
+      "expectedConstraints": 780000
+    }
+  },
+  "optimizations": {
+    "level": 1,
+    "c_flag": true,
+    "reduceConstraints": true
+  },
+  "outputDir": "build/",
+  "verbose": true
+}

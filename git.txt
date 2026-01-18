@@ -1,0 +1,26 @@
+Nivel 1 - Esenciales
+bash# Ethernaut (OpenZeppelin) - 29 niveles
+git clone https://github.com/OpenZeppelin/ethernaut.git
+
+# Capture The Ether - Clásico
+git clone https://github.com/cmichel/capture-the-ether-foundry.git
+
+# Not So Smart Contracts (Crytic/Trail of Bits)
+git clone https://github.com/crytic/not-so-smart-contracts.git
+Nivel 2 - Avanzados
+bash# Paradigm CTF (2021, 2022, 2023)
+git clone https://github.com/paradigmxyz/paradigm-ctf-2021.git
+git clone https://github.com/paradigmxyz/paradigm-ctf-2022.git
+git clone https://github.com/paradigmxyz/paradigm-ctf-2023.git
+
+# Secureum A-MAZE-X (Stanford)
+git clone https://github.com/secureum/DeFi-Security-Summit-Stanford.git
+
+# Mr Steal Yo Crypto
+git clone https://github.com/0xToshii/mr-steal-yo-crypto-ctf.git
+Nivel 3 - Exploits Reales
+bash# DeFi Hack Labs - Reproducciones de hacks reales
+git clone https://github.com/SunWeb3Sec/DeFiHackLabs.git
+
+# DeFi Vulnerabilities (SunWeb3Sec)
+git clone https://github.com/SunWeb3Sec/DeFiVulnLabs.git

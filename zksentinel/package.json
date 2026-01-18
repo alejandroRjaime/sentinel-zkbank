@@ -1,0 +1,34 @@
+{
+  "name": "zk-sentinel",
+  "version": "1.0.0",
+  "description": "Privacy Pool with ZKML and Mathematical Indistinguishability",
+  "main": "index.js",
+  "scripts": {
+    "compile:circuits": "bash scripts/compile_circuits.sh",
+    "setup": "bash scripts/trusted_setup.sh",
+    "test:circuits": "npx mocha test/circuits.test.js",
+    "test:contracts": "forge test",
+    "deploy:sepolia": "forge script scripts/Deploy.s.sol --rpc-url $SEPOLIA_RPC --broadcast",
+    "clean": "rm -rf build circuits/*.r1cs circuits/*.wasm circuits/*.sym"
+  },
+  "dependencies": {
+    "circomlib": "^2.0.5",
+    "circomlibjs": "^0.1.7",
+    "ethers": "^6.16.0",
+    "ffjavascript": "^0.2.57",
+    "snarkjs": "^0.7.0"
+  },
+  "devDependencies": {
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0"
+  },
+  "keywords": [
+    "zero-knowledge",
+    "zkml",
+    "privacy",
+    "coercion-resistance",
+    "ethereum"
+  ],
+  "author": "Alejandro Jaime",
+  "license": "MIT"
+}

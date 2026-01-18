@@ -1,0 +1,53 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# SENTINEL ENGINE - Configuración de Ethereum
+# ═══════════════════════════════════════════════════════════════════════════════
+
+# Nodo principal para obtener bytecode
+node:
+  rpc_url: "http://localhost:8545"
+  chain_id: 1
+  timeout: 30
+
+# Nodo Erigon para traces (puede ser el mismo o diferente)
+erigon:
+  rpc_url: "http://localhost:8545"
+  timeout: 120
+
+# Fuentes de código verificado (orden de prioridad)
+sources:
+  # Sourcify - código verificado con metadata
+  sourcify:
+    enabled: true
+    base_url: "https://sourcify.dev/server"
+    chains:
+      - 1      # Mainnet
+      - 5      # Goerli
+      - 11155111  # Sepolia
+      - 137    # Polygon
+      - 42161  # Arbitrum
+      - 10     # Optimism
+    timeout: 30
+    
+  # Etherscan - fallback
+  etherscan:
+    enabled: true
+    api_key: "${ETHERSCAN_API_KEY}"
+    base_url: "https://api.etherscan.io/api"
+    timeout: 30
+
+# Directorios de trabajo
+directories:
+  contracts: "./contracts"
+  analysis: "./analysis"
+  reports: "./reports"
+  cache: "./.cache"
+
+# Detección de proxies
+proxy_detection:
+  enabled: true
+  patterns:
+    - "EIP1967"      # TransparentUpgradeableProxy
+    - "EIP1822"      # UUPS
+    - "EIP897"       # DelegateProxy
+    - "Diamond"      # EIP2535
+    - "Beacon"       # BeaconProxy

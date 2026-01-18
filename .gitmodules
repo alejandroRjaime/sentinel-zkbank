@@ -1,0 +1,6 @@
+[submodule "zkbank/lib/openzeppelin-contracts"]
+	path = zkbank/lib/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts
+[submodule "zksentinel/lib/openzeppelin-contracts"]
+	path = zksentinel/lib/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts

@@ -1,0 +1,36 @@
+# Dependencias
+node_modules/
+
+# Build artifacts
+build/
+artifacts/
+cache/
+
+# Keys and proofs
+*.zkey
+*.ptau
+*.wasm
+*.r1cs
+*.sym
+
+# Environment variables
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Test outputs
+test-results/
+coverage/__pycache__/
+*.pyc
+reports/

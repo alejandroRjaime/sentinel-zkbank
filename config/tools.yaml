@@ -1,0 +1,235 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# SENTINEL ENGINE - Stack Híbrido Optimizado
+# "El .sol explica la intención. El bytecode prueba la realidad."
+# ═══════════════════════════════════════════════════════════════════════════════
+
+# ┌─────────────────────────────────────────────────────────────────────────────┐
+# │ MUNDO .sol (intención y semántica) - Solo si hay source verificado         │
+# └─────────────────────────────────────────────────────────────────────────────┘
+
+source_world:
+  slither:
+    enabled: true
+    path: "slither"
+    timeout: 300
+    description: "Bugs estructurales, patrones, malas prácticas"
+    config:
+      exclude_informational: true
+      exclude_optimization: true
+      detectors: "all"
+
+  echidna:
+    enabled: true
+    path: "echidna"
+    timeout: 600
+    description: "Invariantes y fuzzing dirigido"
+    config:
+      test_limit: 50000
+      seq_len: 100
+      corpus_dir: null
+      format: "json"
+
+  crosschain_replay:
+    enabled: true
+    provider: "openai"
+    model: "gpt-4o"
+    api_key: "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"  # ← ACÁ
+    min_indicators: 1
+
+  business_logic: # TODOS los contratos ← NUEVO
+    enabled: true
+    provider: "openai"
+    model: "gpt-4"
+    api_key: "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"  # ← ACÁ
+  # ─────────────────────────────────────────────────────────────────
+  # ORACLE ANALYZER (LLM-based)
+  # Detecta vulnerabilidades de precio que los analyzers estáticos no pueden
+  # ─────────────────────────────────────────────────────────────────
+  oracle:
+    enabled: true
+    description: "Flash loan manipulation, price oracle attacks, sandwich vectors"
+    provider: "openai"       # openai | anthropic
+    model: "gpt-4o"          # gpt-4o | claude-sonnet-4-20250514
+    api_key: "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"  # ← ACÁ
+    timeout: 180
+    min_indicators: 2        # Mínimo de keywords de precio para activar LLM
+    # Detecta: balanceOf/price, reserves, oracle, TWAP, swap, pool, deposit/mint
+
+    # NUEVOS - agregar estos 3
+  arbitrary_call:
+      enabled: true
+      provider: "openai"
+      model: "gpt-4o"
+      api_key: "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"  # ← ACÁ
+      min_indicators: 1
+
+  signature_replay:
+      enabled: true
+      provider: "openai"
+      model: "gpt-4o"
+      api_key: "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"  # ← ACÁ
+      min_indicators: 1
+
+  delegatecall_loop:
+      enabled: true
+      provider: "openai"
+      model: "gpt-4o"
+      api_key: "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"  # ← ACÁ
+# ┌─────────────────────────────────────────────────────────────────────────────┐
+# │ MUNDO BYTECODE (verdad ejecutable) - SIEMPRE se ejecuta                    │
+# └─────────────────────────────────────────────────────────────────────────────┘
+
+bytecode_world:
+  mythril:
+    enabled: true
+    path: "myth"
+    timeout: 900
+    description: "Bugs explotables reales sobre lo que corre"
+    config:
+      max_depth: 50
+      execution_timeout: 300
+      solver_timeout: 25000
+      strategy: "bfs"
+
+  manticore:
+    enabled: false  # MUY LENTO - Solo para contratos críticos >$100M
+    path: "manticore"
+    timeout: 3600
+    description: "Paths profundos, lógica compleja"
+    config:
+      thorough_mode: true
+      timeout_per_path: 300
+      workspace: null
+
+  hevm:
+    enabled: true
+    path: "hevm"
+    timeout: 600
+    description: "Razonamiento EVM exacto, delegatecall, storage, proxies"
+    config:
+      smttimeout: 300
+      max_iterations: 10000
+      fuzz_runs: 100
+
+
+# ┌─────────────────────────────────────────────────────────────────────────────┐
+# │ VALIDACIÓN - Ground truth histórico                                        │
+# └─────────────────────────────────────────────────────────────────────────────┘
+
+validation:
+  erigon:
+    enabled: true
+    rpc_url: "http://localhost:8545"
+    timeout: 120
+    description: "Trazas reales de transacciones"
+    config:
+      trace_types: ["vmTrace", "trace", "stateDiff"]
+      max_traces: 100
+
+# ┌─────────────────────────────────────────────────────────────────────────────┐
+# │ PUENTE HUMANO (opcional) - Para entender bytecode sin source               │
+# └─────────────────────────────────────────────────────────────────────────────┘
+
+human_bridge:
+  panoramix:
+    enabled: true
+    path: "panoramix"
+    timeout: 300
+    description: "Decompilación para review humano"
+    config:
+      output_format: "sol"
+
+# ┌─────────────────────────────────────────────────────────────────────────────┐
+# │ LLM PIPELINE - Análisis inteligente con IA                                 │
+# └─────────────────────────────────────────────────────────────────────────────┘
+
+llm:
+  enabled: true
+
+  # ─────────────────────────────────────────────────────────────────
+  # PROVEEDOR LLM
+  # ─────────────────────────────────────────────────────────────────
+  provider: "openai"  # claude | openai | ollama
+  model: "gpt-4o"     # gpt-4o | claude-sonnet-4-20250514 | llama3:70b
+  timeout: 180
+  api_key: "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"
+  # API Keys: usar variables de entorno
+  # export OPENAI_API_KEY="sk-..."
+  # export ANTHROPIC_API_KEY="sk-ant-..."
+
+  # ─────────────────────────────────────────────────────────────────
+  # AGENTE 1: Correlación
+  # Fusiona findings de múltiples herramientas, elimina duplicados
+  # ─────────────────────────────────────────────────────────────────
+  correlation:
+    enabled: true
+    min_confidence: 0.6  # 0.0-1.0 (mayor = más estricto)
+
+  # ─────────────────────────────────────────────────────────────────
+  # AGENTE 2: Attack Chains
+  # Detecta vulnerabilidades compuestas (DAO, Flash Loan, etc.)
+  # ─────────────────────────────────────────────────────────────────
+  attack_chains:
+    enabled: true
+
+  # ─────────────────────────────────────────────────────────────────
+  # AGENTE 3: Validación de Exploits (Requiere Foundry)
+  # Compila y ejecuta exploits en fork para verificar funcionamiento
+  # ─────────────────────────────────────────────────────────────────
+  exploit_validation:
+    enabled: false  # Cambiar a true si tienes Foundry instalado
+    rpc_url: "https://eth.llamarpc.com"
+    foundry_path: "forge"
+
+  # ─────────────────────────────────────────────────────────────────
+  # PIPELINE TRADICIONAL
+  # ─────────────────────────────────────────────────────────────────
+  pipeline:
+    triage: true        # Filtrar falsos positivos
+    analysis: true      # Análisis profundo
+    poc: true           # Generar PoCs (solo critical/high)
+    remediation: true   # Sugerir fixes
+    summary: true       # Resumen ejecutivo
+
+  # Filtros
+  filters:
+    min_confidence: 70  # Mínimo % confianza para true positive
+    skip_info: true     # No procesar severity=INFO
+
+# ┌─────────────────────────────────────────────────────────────────────────────┐
+# │ STACK DE HERRAMIENTAS                                                      │
+# └─────────────────────────────────────────────────────────────────────────────┘
+#
+# SOURCE WORLD (análisis de código):
+#   ✅ Slither   → Bugs estructurales, patrones
+#   ✅ Echidna   → Fuzzing de invariantes
+#   ✅ Oracle    → LLM para price manipulation (NUEVO)
+#
+# BYTECODE WORLD (análisis de ejecución):
+#   ✅ Mythril   → Symbolic execution
+#   ✅ Hevm      → EVM semantics
+#   ❌ Manticore → Muy lento (opcional)
+#
+# LLM PIPELINE:
+#   ✅ Correlación    → Deduplica findings
+#   ✅ Attack Chains  → Detecta combos
+#   ❌ Exploit Valid  → Requiere Foundry
+
+# ┌─────────────────────────────────────────────────────────────────────────────┐
+# │ MODOS DE ANÁLISIS                                                          │
+# └─────────────────────────────────────────────────────────────────────────────┘
+#
+# QUICK (~5 min):
+#   - Solo Mythril + Slither
+#   - Sin LLM
+#
+# NORMAL (~15-20 min):
+#   - Source: Slither + Echidna + Oracle
+#   - Bytecode: Mythril + Hevm
+#   - LLM: Correlación + Attack Chains
+#
+# DEEP (~30-50 min):
+#   - Todo lo anterior
+#   - Bytecode: + Manticore (si enabled)
+#   - Validación: Erigon traces
+#   - LLM: + Exploit Validation (si Foundry instalado)
